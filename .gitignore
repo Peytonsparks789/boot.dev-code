@@ -1,2 +1,7 @@
 __pycache__/
 /worldbanc
+/.venv
+.python-version
+game_state.jsonl
+*.toml
+*.lock
