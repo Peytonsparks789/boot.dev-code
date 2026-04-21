@@ -19,4 +19,4 @@ pyproject.toml
 *.idea
 
 # General files
-worldbanc/
+/worldbanc
