@@ -1,7 +1,22 @@
+# Python-generated files
 __pycache__/
-/worldbanc
-/.venv
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# uv generated files
+uv.lock
 .python-version
-*.toml
-*.lock
-/.idea
+pyproject.toml
+.env
+
+# JetBrains
+*.idea
+
+# General files
+/worldbanc
