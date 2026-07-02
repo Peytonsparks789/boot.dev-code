@@ -1,5 +1,5 @@
 import unittest
-from src.leafnode import LeafNode
+from src.nodes.leafnode import LeafNode
 
 '''
     Test cases for LeafNode
@@ -21,85 +21,85 @@ class TestLeafNode(unittest.TestCase):
     # --- to_html ---
     def test_to_html_prop_not_rendered_when_prop_is_none(self):
         node = LeafNode(
-            value = "Hello, world!",
-            tag = "p")
+            tag="p",
+            value = "Hello, world!")
         self.assertEqual(node.to_html(), "<p>Hello, world!</p>")
 
     def test_to_html_prop_not_rendered_when_prop_is_empty(self):
         node = LeafNode(
-            value = "Hello, world!",
             tag = "p",
+            value = "Hello, world!",
             props = {} )
         self.assertEqual(node.to_html(), "<p>Hello, world!</p>")
 
     def test_to_html_single_prop_rendered_when_only_one_prop_present(self):
         node = LeafNode(
-            value = "Hello, world!",
             tag = "p",
+            value = "Hello, world!",
             props = {"href": "https://google.com"})
         self.assertEqual(node.to_html(), "<p href=\"https://google.com\">Hello, world!</p>")
 
     def test_to_html_many_props_rendered_when_many_props_present(self):
         node = LeafNode(
+            tag="p",
             value = "Hello, world!",
-            tag = "p",
             props = {"href": "https://google.com", "target": "_blank"})
         self.assertEqual(node.to_html(), "<p href=\"https://google.com\" target=\"_blank\">Hello, world!</p>")
 
     def test_to_html_value_equals_none_throws_error(self):
         node = LeafNode(
-            value = None,
-            tag = "p",
+            tag="p",
+            value = None
         )
         with self.assertRaises(ValueError):
             node.to_html()
 
     def test_to_html_value_equals_blank_throws_error(self):
         node = LeafNode(
-            value = "",
-            tag = "p"
+            tag="p",
+            value = ""
         )
         with self.assertRaises(ValueError):
             node.to_html()
 
     def test_to_html_tag_equals_none_returns_value(self):
         node = LeafNode(
-            value = "Hello, world!",
-            tag = None
+            tag = None,
+            value = "Hello, world!"
         )
         self.assertEqual(node.to_html(), "Hello, world!")
 
     def test_to_html_tag_equals_blank_returns_value(self):
         node = LeafNode(
-            value = "Hello, world!",
-            tag = ""
+            tag = "",
+            value = "Hello, world!"
         )
         self.assertEqual(node.to_html(), "Hello, world!")
 
     def test_to_html_tag_present_wraps_value(self):
         node = LeafNode(
-            value = "Hello, world!",
             tag = "p",
+            value = "Hello, world!",
         )
         self.assertEqual(node.to_html(), "<p>Hello, world!</p>")
 
     # --- repr ---
     def test_repr_contains_tag_when_not_none(self):
         node = LeafNode(
-            value = "this is a value",
-            tag = "this is a tag")
+            tag="this is a tag",
+            value = "this is a value")
         self.assertIn("this is a tag", repr(node))
 
     def test_repr_contains_value_when_not_none(self):
         node = LeafNode(
-            value = "this is a value",
-            tag = None)
+            tag = None,
+            value = "this is a value")
         self.assertIn("this is a value", repr(node))
 
     def test_repr_contains_props_when_not_none(self):
         node = LeafNode(
-            value = "this is a value",
             tag = "p",
+            value = "this is a value",
             props = {"href": "https://google.com", "target": "_blank"})
         self.assertIn("props:", repr(node))
         self.assertIn("href", repr(node))

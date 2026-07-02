@@ -1,5 +1,5 @@
 import unittest
-from src.textnode import TextNode, TextType
+from src.nodes.textnode import TextNode, TextType
 
 '''
     Test cases for TextNode
