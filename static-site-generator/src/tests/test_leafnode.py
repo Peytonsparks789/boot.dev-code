@@ -8,9 +8,10 @@ from src.nodes.leafnode import LeafNode
         - props is ""
         - single prop
         - many props
-        - error on None or "" value
+        - error on None or "" value when not a void element
         - tag present wraps value
         - tag not present does not wrap value
+        - void elements should render properly
     - repr
         - contains tags
         - contains value
@@ -46,7 +47,7 @@ class TestLeafNode(unittest.TestCase):
             props = {"href": "https://google.com", "target": "_blank"})
         self.assertEqual(node.to_html(), "<p href=\"https://google.com\" target=\"_blank\">Hello, world!</p>")
 
-    def test_to_html_value_equals_none_throws_error(self):
+    def test_to_html_value_equals_none_and_not_void_element_throws_error(self):
         node = LeafNode(
             tag="p",
             value = None
@@ -54,7 +55,7 @@ class TestLeafNode(unittest.TestCase):
         with self.assertRaises(ValueError):
             node.to_html()
 
-    def test_to_html_value_equals_blank_throws_error(self):
+    def test_to_html_value_equals_blank_and_not_void_element_throws_error(self):
         node = LeafNode(
             tag="p",
             value = ""
@@ -82,6 +83,14 @@ class TestLeafNode(unittest.TestCase):
             value = "Hello, world!",
         )
         self.assertEqual(node.to_html(), "<p>Hello, world!</p>")
+
+    def test_to_html_void_elements_should_render_properly(self):
+        node = LeafNode(
+            tag = "img",
+            value = "Hello, world!",
+            props = {"src": "https://google.com"}
+        )
+        self.assertEqual(node.to_html(), "<img src=\"https://google.com\">")
 
     # --- repr ---
     def test_repr_contains_tag_when_not_none(self):
