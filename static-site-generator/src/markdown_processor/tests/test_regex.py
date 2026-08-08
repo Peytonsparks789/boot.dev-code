@@ -32,8 +32,10 @@ class TestRegexExtractions(unittest.TestCase):
             ("rick roll", "https://image.com/rick.gif")
         ]
 
+        matches = list(extract_markdown_images(text))
+
         self.assertEqual(
-            extract_markdown_images(text),
+            [match.groups() for match in matches],
             expected
         )
 
@@ -49,8 +51,10 @@ class TestRegexExtractions(unittest.TestCase):
             ("obi wan", "https://image.com/obi.jpeg"),
         ]
 
+        matches = list(extract_markdown_images(text))
+
         self.assertEqual(
-            extract_markdown_images(text),
+            [match.groups() for match in matches],
             expected
         )
 
@@ -59,8 +63,10 @@ class TestRegexExtractions(unittest.TestCase):
 
         expected = []
 
+        matches = list(extract_markdown_images(text))
+
         self.assertEqual(
-            extract_markdown_images(text),
+            [match.groups() for match in matches],
             expected
         )
 
@@ -71,8 +77,10 @@ class TestRegexExtractions(unittest.TestCase):
             ("This is my image", "https://image.com/test.png")
         ]
 
+        matches = list(extract_markdown_images(text))
+
         self.assertEqual(
-            extract_markdown_images(text),
+            [match.groups() for match in matches],
             expected
         )
 
@@ -85,8 +93,10 @@ class TestRegexExtractions(unittest.TestCase):
             ("boot dev", "https://www.boot.dev")
         ]
 
+        matches = list(extract_markdown_links(text))
+
         self.assertEqual(
-            extract_markdown_links(text),
+            [match.groups() for match in matches],
             expected
         )
 
@@ -102,8 +112,10 @@ class TestRegexExtractions(unittest.TestCase):
             ("youtube", "https://youtube.com"),
         ]
 
+        matches = list(extract_markdown_links(text))
+
         self.assertEqual(
-            extract_markdown_links(text),
+            [match.groups() for match in matches],
             expected
         )
 
@@ -112,8 +124,10 @@ class TestRegexExtractions(unittest.TestCase):
 
         expected = []
 
+        matches = list(extract_markdown_links(text))
+
         self.assertEqual(
-            extract_markdown_links(text),
+            [match.groups() for match in matches],
             expected
         )
 
@@ -124,8 +138,10 @@ class TestRegexExtractions(unittest.TestCase):
             ("Click here to visit", "https://example.com")
         ]
 
+        matches = list(extract_markdown_links(text))
+
         self.assertEqual(
-            extract_markdown_links(text),
+            [match.groups() for match in matches],
             expected
         )
 
@@ -136,7 +152,9 @@ class TestRegexExtractions(unittest.TestCase):
 
         expected = []
 
+        matches = list(extract_markdown_links(text))
+
         self.assertEqual(
-            extract_markdown_links(text),
+            [match.groups() for match in matches],
             expected
         )
