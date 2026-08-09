@@ -1,17 +1,27 @@
 import unittest
 
-from src.markdown_processor.markdown_to_blocks import markdown_to_blocks
+from src.markdown_processor.markdown_to_blocks import markdown_to_blocks, block_to_block_type, BlockType
 
 '''
 Test cases for test_markdown_to_blocks.py
 
-* markdown_to_blocks
-* single block returns one block
-* multiple blocks returns all blocks
-* leading and trailing whitespace is stripped
-* excessive newlines do not create empty blocks
-* single newlines are preserved within a block
-  '''
+- markdown_to_blocks
+  - single block returns one block
+  - multiple blocks returns all blocks
+  - leading and trailing whitespace is stripped
+  - excessive newlines do not create empty blocks
+  - single newlines are preserved within a block
+  - markdown formatting is preserved
+
+- block_to_block_type
+  - paragraph returns paragraph type
+  - heading returns heading type
+  - code block returns code type
+  - quote returns quote type
+  - unordered list returns unordered list type
+  - ordered list returns ordered list type
+  - ordered list does not require sequential numbers
+'''
 
 class TestMarkdownToBlocks(unittest.TestCase):
 
@@ -125,7 +135,7 @@ This is the same paragraph on a new line
 
 - This is a list
 - with items
-    """
+"""
 
         blocks = markdown_to_blocks(md)
 
@@ -136,4 +146,74 @@ This is the same paragraph on a new line
                 "This is another paragraph with *italic* text and `code` here\nThis is the same paragraph on a new line",
                 "- This is a list\n- with items",
             ],
+        )
+
+    # --- block_to_block_type ---
+
+    def test_paragraph_returns_paragraph_type(self):
+        block = "This is a paragraph of text."
+
+        self.assertEqual(
+            block_to_block_type(block),
+            BlockType.PARAGRAPH
+        )
+
+    def test_heading_returns_heading_type(self):
+        block = "# This is a heading"
+
+        self.assertEqual(
+            block_to_block_type(block),
+            BlockType.HEADING
+        )
+
+    def test_code_block_returns_code_type(self):
+        block = "```print('Hello, world!')```"
+
+        self.assertEqual(
+            block_to_block_type(block),
+            BlockType.CODE
+        )
+
+    def test_quote_returns_quote_type(self):
+        block = "> This is a quote"
+
+        self.assertEqual(
+            block_to_block_type(block),
+            BlockType.QUOTE
+        )
+
+    def test_unordered_list_returns_unordered_list_type(self):
+        block = (
+            "- First item\n"
+            "- Second item\n"
+            "- Third item"
+        )
+
+        self.assertEqual(
+            block_to_block_type(block),
+            BlockType.UNORDERED_LIST
+        )
+
+    def test_ordered_list_returns_ordered_list_type(self):
+        block = (
+            "1. First item\n"
+            "2. Second item\n"
+            "3. Third item"
+        )
+
+        self.assertEqual(
+            block_to_block_type(block),
+            BlockType.ORDERED_LIST
+        )
+
+    def test_ordered_list_does_not_require_sequential_numbers(self):
+        block = (
+            "1. First item\n"
+            "1. Second item\n"
+            "7. Third item"
+        )
+
+        self.assertEqual(
+            block_to_block_type(block),
+            BlockType.ORDERED_LIST
         )
